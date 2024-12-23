@@ -41,18 +41,18 @@ Bind(wxEVT_MENU, &frame::OnEndGame, this, ID_EndGame);  // 使用 frame 类名
     menuFile->Append(ID_Clear, wxT("清空(&C)\tCtrl-D"), wxT("清空当前的棋盘。"));  //清空当前棋谱
     menuFile->AppendSeparator();
     menuFile->Append(ID_Exit, wxT("退出(&X)\tAlt-F4"), wxT("退出程序。"));  //正常退出
-    mainMenu->Append(menuFile, wxT("文件(&F)"));  //不太确定功能
+    mainMenu->Append(menuFile, wxT("文件(&F)"));  
 
     menuEdit = new wxMenu(0l);
     menuEdit->Append(ID_Undo, wxT("撤销(&U)\tCtrl-Z"), wxT("撤销上一步操作。"));  
     menuEdit->Append(ID_Redo, wxT("重复(&R)\tCtrl-Y"), wxT("重做上一步操作。"));
-    mainMenu->Append(menuEdit, wxT("编辑(&E)"));  //应该是关于棋谱信息的编辑
+    mainMenu->Append(menuEdit, wxT("编辑(&E)"));  //关于棋谱信息的编辑
 
     auto menuMode = new wxMenu(0l);
     menuMode->AppendRadioItem(ID_ModeFlipKeep, wxT("翻转/保持(&K)\tCtrl-K"), wxT("按鼠标左键更换棋子颜色，按鼠标右键保持棋子颜色。"));
     menuMode->AppendRadioItem(ID_ModeBlackWhite, wxT("黑棋/白棋(&A)\tCtrl-A"), wxT("按鼠标左键落黑子，按鼠标右键落白子。"));
     mainMenu->Append(menuMode, wxT("鼠标模式(&M)"));
-    //通过左右键确定黑白棋子，需要修改
+    //两种记谱方式，一种是通过左右键确定黑白棋子
 
     auto menuHelp = new wxMenu(0l);
     menuHelp->Append(ID_About, wxT("关于(&A)...\tF12"), wxT("关于这个程序和作者。"));
@@ -127,7 +127,7 @@ void frame::OnOpen(wxCommandEvent& event)
     };
     //打开存档
     if (openFileDialog.ShowModal() == wxID_CANCEL)
-        return;     //突然不想这么做了……
+        return;     //用户突然不想这么做了……
     
     // proceed loading the file chosen by the user;
     // this can be done with e.g. wxWidgets input streams:
