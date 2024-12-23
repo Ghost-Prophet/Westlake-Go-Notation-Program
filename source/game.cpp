@@ -2,6 +2,8 @@
 #include "math.h"
 #include<stdio.h>
 
+#define DB double
+
 game_board::game_board() {
 	// 初始化棋盘
 	for (int i = 0; i < 21; ++ i)
@@ -177,4 +179,31 @@ void game_board::on_click(int x, int y) {
     } else {
         mark_dead(x, y);
     }
+}
+
+ll game_board::dfs(ll x,ll y){
+	if(board[x][y]!=0)return board[x][y];
+	if(x==0||y==0||x>19||y>19)return 0;
+	static constexpr int dx[] {-1, 0, 1, 0};
+	static constexpr int dy[] {0, -1, 0, 1};
+	ll res=0;
+	for(ll _=0;_<4;_++){
+		ll cur=dfs(x+dx[_],y+dy[_]);
+		if(!cur)continue;
+		if(!res){res=cur;continue;}
+		if(cur^res)return 2;
+	}
+}
+rec game_board::calc(){
+	DB resw=0,resb=0;cnt=0;
+	for(ll i=1;i<=19;i++)
+		for(ll j=1;j<=19;j++){
+			if(board[i][j]==-1){resw++;continue;}
+			if(board[i][j]==1){resb++;continue;}
+			ll cur=dfs(i,j);
+			if(cur==-1)resw+=cnt;
+			else if(cur==1)resb+=cnt;
+			else resw+=cnt/2.0,resb+=cnt/2.0;
+		}
+	return (rec){resw,resb};
 }
