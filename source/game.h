@@ -9,6 +9,10 @@ constexpr int length = gridSize * gridCount;
 
 const int stars[]{4 * gridSize, 10 * gridSize, 16 * gridSize};
 
+#define ll long long
+#define DB double
+struct rec{DB b,w;}
+
 class game_board
 {
 private:
@@ -20,6 +24,7 @@ private:
     int tx{0};
     int ty{0};
     int step{0};
+    int cnt;
 protected:
     void remove_dead(int colour);
     void visit(int colour, int x, int y);
@@ -29,6 +34,8 @@ protected:
     void mark_dead(int x, int y);
     void unmark_dead(int x, int y);
     void on_click(int x, int y);
+    ll dfs(ll x,ll y);
+    rec calc();
 public:
     bool is_dead(int x, int y);
     int record[21][21];
