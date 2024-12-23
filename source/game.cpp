@@ -150,6 +150,7 @@ bool game_board::can_place(int colour, int x, int y) {
 	tx=tagg?ux:0,ty=tagg?uy:0;
 	return true;
 }
+//关于打劫，比较复杂（禁全同）
 
 bool game_board::is_dead(int x, int y) {
     return dead_stones[x][y];
@@ -157,7 +158,7 @@ bool game_board::is_dead(int x, int y) {
 
 // 添加死棋标记
 void game_board::mark_dead(int x, int y) {
-    if (board[x][y] != Blank) {  // 只有棋子才能被标记为死棋
+    if (board[x][y] != Blank) {  // 只有棋子才能被标记为死棋，空白部分不行
         dead_stones[x][y] = true;
     }
 }
@@ -181,5 +182,6 @@ void game_board::on_click(int x, int y) {
     }
 }
 
+//程序最重要的部分之一，内部逻辑
 
 
