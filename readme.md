@@ -12,7 +12,8 @@ Westlake-Go-Notation-Program 是一个围棋记谱程序，主要使用 C++ 和 
 
 ## 程序功能
 
-本程序提供围棋记谱功能，同时有多种背景可以选择，并拥有终盘数子功能。
+本程序提供围棋记谱功能，同时有多种背景可以选择，并拥有终盘数子功能，帮助围棋爱好者记录棋谱、复盘并提高。
+The program provides an intuitive interface that allows users to easily input moves, review past games, and perform in-depth game analysis. By offering tools for reflecting on and improving gameplay, the program aims to support Go enthusiasts in enhancing their skills and understanding of the game.
 
 ## 项目依赖
 
