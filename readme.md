@@ -1,6 +1,6 @@
-# Westlake-Go-Notation-Program 项目
+# Westlake-Go-Notation-Program 西湖大学围棋记谱程序
 
-Westlake-Go-Notation-Program 是一个围棋游戏客户端，使用 C++ 和 wxWidgets 编写，支持 Windows 操作系统。
+Westlake-Go-Notation-Program 是一个围棋记谱程序，主要使用 C++ 和 wxWidgets 编写，支持 Windows 操作系统。
 
 ## 目录结构
 
@@ -10,9 +10,13 @@ Westlake-Go-Notation-Program 是一个围棋游戏客户端，使用 C++ 和 wxW
 - `binary/`：存放最终的可执行文件
 - `Makefile`：用于构建项目的 Makefile
 
+## 程序功能
+
+本程序提供围棋记谱功能，同时有多种背景可以选择，并拥有终盘数子功能。
+
 ## 项目依赖
 
-在使用和编译该项目之前，确保您的系统已安装以下依赖项：
+在使用和编译该项目之前，请确保您的系统已安装以下依赖项：
 
 - **C++ 编译器**：支持 C++17，推荐使用 `g++`（如 MinGW 或 MSYS2）
 - **wxWidgets**：3.0 版本的 wxWidgets 库，用于图形界面构建
