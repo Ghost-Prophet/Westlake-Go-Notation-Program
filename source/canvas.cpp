@@ -30,7 +30,7 @@ void canvas::selectBackgroundFromPreset()
         {wxT("黄绿"), wxT("../art/背景2 黄绿.png")},
         {wxT("淡橙"), wxT("../art/背景4 淡橙.png")}
     };
-
+    // 由于格式问题，天蓝背景暂时没有开放
     // 创建选择框
     wxArrayString choices;
     for (const auto& bg : backgrounds)
@@ -45,7 +45,7 @@ void canvas::selectBackgroundFromPreset()
         wxLogError("未选择任何图片，使用默认背景。");
         return;
     }
-
+    // 默认背景为黑色，黑棋会看不清
     // 根据用户选择加载图片
     auto it = std::find_if(backgrounds.begin(), backgrounds.end(), [&](const auto& bg) {
         return bg.first == selected;
@@ -68,6 +68,7 @@ void canvas::selectBackgroundFromPreset()
     {
         wxLogError("未知错误，无法加载选定图片。");
     }
+    // 故不能只下载exe，需要下载整个文件
 }
 
 void canvas::preparePalete()
@@ -117,9 +118,9 @@ void canvas::realise(wxDC& target)
     wxMemoryDC stoneDC[]{{stone[0]}, {stone[1]}};
     const wxSize sz = stone[0].GetSize();
 
-    // 默认字体大小
+    // 默认字体大小，设定字体
     target.SetFont(wxFont{wxFontInfo{10}.Bold().FaceName("Microsoft JhengHei")});
-
+    
     // 画棋子
     for (int i = 1; i <= 19; ++i)
     for (int j = 1; j <= 19; ++j)
@@ -169,7 +170,7 @@ void canvas::realise(wxDC& target)
                 target.SetPen(wxPen(*wxRED, 5));  // 设置红色线条，2像素宽
                 target.SetBrush(*wxTRANSPARENT_BRUSH);  // 设置透明刷子，避免填充
                 
-                // 绘制红色交叉线
+                // 绘制红色交叉线（点击一个棋子时该棋子所在的一整块棋子都会被标记）
                 target.DrawLine(xPos - (gridSize-13) / 2, yPos - (gridSize-13) / 2, xPos + (gridSize-13) / 2, yPos + (gridSize-13) / 2);  // 对角线1
                 target.DrawLine(xPos - (gridSize-13) / 2, yPos + (gridSize-13) / 2, xPos + (gridSize-13) / 2, yPos - (gridSize-13) / 2);  // 对角线2
             }
@@ -177,7 +178,7 @@ void canvas::realise(wxDC& target)
     }
 
 
-    // 恢复默认字体
+    // 恢复默认字体（可以的）
     target.SetFont(wxNullFont);
 }
 
