@@ -29,6 +29,7 @@ frame::frame()
     auto mainMenu = new wxMenuBar(0l);
 auto menuGame = new wxMenu(0l);
 menuGame->Append(ID_EndGame, wxT("结束下棋(&G)\tCtrl-G"), wxT("结束当前对局，进入死子标记阶段。"));
+menuGame->Append(ID_EndMarkDead, wxT("结束标记死子(&D)\tCtrl-D"), wxT("结束当前的标记死子操作，结算棋局。"));
 mainMenu->Append(menuGame, wxT("游戏(&G)"));
 Bind(wxEVT_MENU, &frame::OnEndGame, this, ID_EndGame);  // 使用 frame 类名
 
@@ -69,8 +70,7 @@ Bind(wxEVT_MENU, &frame::OnEndGame, this, ID_EndGame);  // 使用 frame 类名
     Bind(wxEVT_MENU, &frame::OnClear, this, ID_Clear);  //清空
     Bind(wxEVT_MENU, &frame::OnExit, this, ID_Exit);  
     Bind(wxEVT_MENU, &frame::OnAbout, this, ID_About);
-    //没有对应代码，不太确定
-
+    Bind(wxEVT_MENU, &frame::OnEndMarkDead, this, ID_EndMarkDead);
     Bind(wxEVT_PAINT, &frame::OnPaint, this);
 
     Bind(wxEVT_LEFT_UP, &frame::OnLeftUp, this);
@@ -92,7 +92,25 @@ Bind(wxEVT_MENU, &frame::OnEndGame, this, ID_EndGame);  // 使用 frame 类名
 
     colours.push(game_board::White);
 }
+void frame::OnEndMarkDead(wxCommandEvent& event)
+{
+    if (!isDeadPhase) {
+        wxLogError("当前不在死子标记阶段，无法结束标记。");
+        return;
+    }
 
+    // 调用can.calc()来获取目数
+    rec score = can.calc();
+
+    // 弹出结算窗口，显示黑棋和白棋的目数
+    wxString result = wxString::Format(_("黑棋：%.1lf 子\n白棋：%.1lf 子"), score.b, score.w);
+    
+    wxMessageDialog dialog(this, result, _("结算结果"), wxOK | wxICON_INFORMATION);
+    dialog.ShowModal();
+
+    // 结束标记死子的阶段
+    isDeadPhase = 0;
+}
 void frame::OnOpen(wxCommandEvent& event)
 {
     if (can.can_undo())

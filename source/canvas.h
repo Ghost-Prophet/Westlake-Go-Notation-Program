@@ -9,6 +9,7 @@
 #include <iostream>
 
 #include "game.h"
+#define ll int
 
 class canvas
 {
@@ -18,6 +19,8 @@ protected:
     std::stack<game_board> redos;
     // 棋盘和初始界面
     game_board* can;
+    int cnt=0;
+    int v[25][25];
 
 public:
     canvas();
@@ -69,6 +72,42 @@ public:
         }
         wxLogDebug("is dead 点击位置: (%d, %d)", x, y);
         return can->dead_stones[x][y];
+    }
+    ll dfs(ll x,ll y){
+        if(board.top()[x][y]!=0)return board.top()[x][y];
+        if(x==0||y==0||x>19||y>19)return 0;
+        if(v[x][y])return 0;
+        static constexpr int dx[] {-1, 0, 1, 0};
+        static constexpr int dy[] {0, -1, 0, 1};
+        ll res=0;cnt++,v[x][y]=1;
+        for(ll _=0;_<4;_++){
+            ll cur=dfs(x+dx[_],y+dy[_]);
+            if(!cur)continue;
+            if(!res){res=cur;continue;}
+            if(cur!=res)return 2;
+        }
+        // wxLogError("i=%d j=%d r=%d\n",x,y,res);
+        return res;
+    }
+    rec calc(){
+        for(ll i=0;i<=20;i++)
+            for(ll j=0;j<=20;j++)
+                if(can->dead_stones[i][j]==true)board.top()[i][j]=0;
+        for(ll i=0;i<=20;i++)
+            for(ll j=0;j<=20;j++)v[i][j]=0;
+        for(ll i=0;i<=20;i++)board.top()[i][0]=board.top()[i][20]=board.top()[0][i]=board.top()[20][i]=0;
+        DB resw=0,resb=0;cnt=0;
+        for(ll i=1;i<=19;i++)
+            for(ll j=1;j<=19;j++){
+                if(board.top()[i][j]==-1){resw++,v[i][j]=1;continue;}
+                if(board.top()[i][j]==1){resb++,v[i][j]=1;continue;}
+                ll cur=dfs(i,j);
+                if(cur==-1)resw+=cnt;
+                else if(cur==1)resb+=cnt;
+                else if(cur==2)resw+=cnt/2.0,resb+=cnt/2.0;
+                cnt=0;
+            }
+        return (rec){resw,resb};
     }
 
     void place(int colour, int x, int y) {

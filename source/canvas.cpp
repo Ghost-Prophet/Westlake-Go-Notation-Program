@@ -25,12 +25,10 @@ void canvas::selectBackgroundFromPreset()
 {
     // 可选的棋盘背景图片
     std::vector<std::pair<wxString, wxString>> backgrounds = {
-        {wxT("木质纹理1"), wxT("../art/wooden_texture.png")},
-        {wxT("木质纹理2"), wxT("../art/wooden_texture_2.png")},
-        {wxT("背景1 紫白"), wxT("../art/背景1 紫白.png")},
-        {wxT("背景2 黄绿"), wxT("../art/背景2 黄绿.png")},
-        {wxT("背景3 天蓝"), wxT("../art/天蓝.png")},
-        {wxT("背景4 淡橙"), wxT("../art/背景4 淡橙.png")}
+        {wxT("木质纹理"), wxT("../art/wooden_texture.png")},
+        {wxT("紫白"), wxT("../art/背景1 紫白.png")},
+        {wxT("黄绿"), wxT("../art/背景2 黄绿.png")},
+        {wxT("淡橙"), wxT("../art/背景4 淡橙.png")}
     };
 
     // 创建选择框
@@ -64,7 +62,7 @@ void canvas::selectBackgroundFromPreset()
 
         chosenImage.Rescale(sizeTotal, sizeTotal, wxIMAGE_QUALITY_HIGH);
         palete = wxBitmap(chosenImage); // 设置背景
-        wxLogMessage("成功加载背景：%s", selected);
+        wxLogMessage("对局开始！");
     }
     else
     {
@@ -172,8 +170,8 @@ void canvas::realise(wxDC& target)
                 target.SetBrush(*wxTRANSPARENT_BRUSH);  // 设置透明刷子，避免填充
                 
                 // 绘制红色交叉线
-                target.DrawLine(xPos - gridSize / 2, yPos - gridSize / 2, xPos + gridSize / 2, yPos + gridSize / 2);  // 对角线1
-                target.DrawLine(xPos - gridSize / 2, yPos + gridSize / 2, xPos + gridSize / 2, yPos - gridSize / 2);  // 对角线2
+                target.DrawLine(xPos - (gridSize-13) / 2, yPos - (gridSize-13) / 2, xPos + (gridSize-13) / 2, yPos + (gridSize-13) / 2);  // 对角线1
+                target.DrawLine(xPos - (gridSize-13) / 2, yPos + (gridSize-13) / 2, xPos + (gridSize-13) / 2, yPos - (gridSize-13) / 2);  // 对角线2
             }
         }
     }

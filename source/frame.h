@@ -17,8 +17,9 @@ enum MenuID
     ID_About
 };
 enum {
-    ID_EndGame = wxID_HIGHEST + 1,
-    // Other ID constants
+    ID_EndGame = wxID_HIGHEST + 1,   // 这里的 wxID_HIGHEST 是 wxWidgets 自带的最大 ID
+    ID_EndMarkDead,
+    // 其他 ID
 };
 class frame : public wxFrame
 {
@@ -34,6 +35,7 @@ private:
 public:
     frame();
     canvas can;
+    void OnEndMarkDead(wxCommandEvent& event);
     void OnEndGame(wxCommandEvent& event);
     void OnOpen(wxCommandEvent& event);
     void OnSave(wxCommandEvent& event);
